@@ -85,28 +85,32 @@ function startHeartAnimation() {
 	}
 })(jQuery);
 
-function timeElapse(c) {
-	var e = Date();
-	var f = (Date.parse(e) - Date.parse(c)) / 1000;
-	var g = Math.floor(f / (3600 * 24));
-	f = f % (3600 * 24);
-	var b = Math.floor(f / 3600);
-	if (b < 10) {
-		b = "0" + b
-	}
-	f = f % 3600;
-	var d = Math.floor(f / 60);
-	if (d < 10) {
-		d = "0" + d
-	}
-	f = f % 60;
-	if (f < 10) {
-		f = "0" + f
-	}
-	var a = '<span class="digit">' + g + '</span> days <span class="digit">' + b + '</span> hours <span class="digit">' + d + '</span> minutes <span class="digit">' + f + "</span> seconds";
-	$("#elapseClock").html(a)
+function timeElapse() {
+    var startDate = new Date("January 22, 2025 00:00:00"); // Fixed start date
+    var currentDate = new Date(); // Current date and time
+    
+    var f = (currentDate - startDate) / 1000; // Time difference in seconds
+
+    var g = Math.floor(f / (3600 * 24)); // Days
+    f = f % (3600 * 24);
+
+    var b = Math.floor(f / 3600); // Hours
+    if (b < 10) b = "0" + b;
+
+    f = f % 3600;
+
+    var d = Math.floor(f / 60); // Minutes
+    if (d < 10) d = "0" + d;
+
+    f = Math.floor(f % 60); // Seconds
+    if (f < 10) f = "0" + f;
+
+    var a = `<span class="digit">${g}</span> days <span class="digit">${b}</span> hours <span class="digit">${d}</span> minutes <span class="digit">${f}</span> seconds`;
+    $("#elapseClock").html(a);
 }
 
+// Update the timer every second
+setInterval(timeElapse, 1000);
 function showMessages() {
 	adjustWordsPosition();
 	$("#messages").fadeIn(5000, function () {
