@@ -86,30 +86,30 @@ function startHeartAnimation() {
 })(jQuery);
 
 function timeElapse() {
-    var startDate = new Date("January 22, 2025 00:00:00"); // Fixed start date
-    var currentDate = new Date(); // Current date and time
-    
-    var f = (currentDate - startDate) / 1000; // Time difference in seconds
+    var startDate = new Date("January 22, 2025 00:00:00").getTime(); // Set correct start date
+    var currentDate = new Date().getTime(); // Get current time
 
-    var g = Math.floor(f / (3600 * 24)); // Days
-    f = f % (3600 * 24);
+    var elapsed = (currentDate - startDate) / 1000; // Time difference in seconds
 
-    var b = Math.floor(f / 3600); // Hours
-    if (b < 10) b = "0" + b;
+    var days = Math.floor(elapsed / (3600 * 24));
+    var hours = Math.floor((elapsed % (3600 * 24)) / 3600);
+    var minutes = Math.floor((elapsed % 3600) / 60);
+    var seconds = Math.floor(elapsed % 60);
 
-    f = f % 3600;
+    // Add leading zeros for formatting
+    hours = hours < 10 ? "0" + hours : hours;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    var d = Math.floor(f / 60); // Minutes
-    if (d < 10) d = "0" + d;
+    var display = `<span class="digit">${days}</span> days 
+                   <span class="digit">${hours}</span> hours 
+                   <span class="digit">${minutes}</span> minutes 
+                   <span class="digit">${seconds}</span> seconds`;
 
-    f = Math.floor(f % 60); // Seconds
-    if (f < 10) f = "0" + f;
-
-    var a = `<span class="digit">${g}</span> days <span class="digit">${b}</span> hours <span class="digit">${d}</span> minutes <span class="digit">${f}</span> seconds`;
-    $("#elapseClock").html(a);
+    document.getElementById("elapseClock").innerHTML = display;
 }
 
-// Update the timer every second
+// Update every second
 setInterval(timeElapse, 1000);
 function showMessages() {
 	adjustWordsPosition();
